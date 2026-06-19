@@ -3,9 +3,10 @@ import { useState } from "react";
 const App = () => {
   const [age, setAge] = useState(null);
   const [birthYear, setBirthYear] = useState(null);
-  const [currentYear, setCurrentYear] = useState(null);
+  // const [currentYear, setCurrentYear] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
 
+  const currentYear = new Date().getFullYear();
   const handleClick = () => {
     if (!birthYear || !currentYear) {
       alert("Please enter both years");
@@ -27,7 +28,7 @@ const App = () => {
   // ✅ RESET FUNCTION
   const handleReset = () => {
     setBirthYear(null);
-    setCurrentYear(null);
+    // setCurrentYear(null);
     setAge(null);
   };
 
@@ -58,7 +59,7 @@ const App = () => {
         </h1>
 
         {/* Birth Year */}
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <label className="block text-sm mb-2">Birth Year</label>
           <input
             onChange={(e) => setBirthYear(parseInt(e.target.value))}
@@ -71,10 +72,35 @@ const App = () => {
                 : "bg-white border-orange-200"
             }`}
           />
+        </div> */}
+
+        <div className="mb-5">
+          <label className="block text-sm mb-2">Birth Year</label>
+
+          <select
+            onChange={(e) => setBirthYear(parseInt(e.target.value))}
+            value={birthYear || ""}
+            className={`w-full p-3 rounded-xl border outline-none transition ${
+              darkMode
+                ? "bg-gray-700 border-gray-600 text-white"
+                : "bg-white border-orange-200"
+            }`}
+          >
+            <option value="">Select birth year</option>
+
+            {Array.from(
+              { length: new Date().getFullYear() - 1899 },
+              (_, i) => 1900 + i,
+            ).map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Current Year */}
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <label className="block text-sm mb-2">Current Year</label>
           <input
             onChange={(e) => setCurrentYear(parseInt(e.target.value))}
@@ -87,6 +113,20 @@ const App = () => {
                 : "bg-white border-orange-200"
             }`}
           />
+        </div> */}
+
+        <div className="mb-5">
+          <label className="block text-sm mb-2">Current Year</label>
+
+          <div
+            className={`w-full p-3 rounded-xl border outline-none transition ${
+              darkMode
+                ? "bg-gray-700 border-gray-600 text-white"
+                : "bg-gray-100 border-orange-200 text-gray-700"
+            }`}
+          >
+            {new Date().getFullYear()}
+          </div>
         </div>
 
         {/* CALCULATE BUTTON */}
@@ -108,15 +148,17 @@ const App = () => {
 
         {/* RESULT */}
         <div className="mt-6 text-center">
-          <p
-            className={`text-xl font-semibold py-4 rounded-xl transition-all duration-300 ${
-              darkMode
-                ? "bg-gray-700 border border-gray-600"
-                : "bg-orange-50 border border-orange-100"
-            }`}
-          >
-            {age}
-          </p>
+          {age && (
+            <p
+              className={`text-xl font-semibold py-4 rounded-xl transition-all duration-300 ${
+                darkMode
+                  ? "bg-gray-700 border border-gray-600"
+                  : "bg-orange-50 border border-orange-100"
+              }`}
+            >
+              {age}
+            </p>
+          )}
         </div>
       </div>
     </div>
