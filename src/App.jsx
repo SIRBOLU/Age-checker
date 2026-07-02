@@ -90,7 +90,7 @@ const App = () => {
 
             {Array.from(
               { length: new Date().getFullYear() - 1899 },
-              (_, i) => 1900 + i,
+              (_, i) => new Date().getFullYear() - i,
             ).map((year) => (
               <option key={year} value={year}>
                 {year}
